@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tạo Thông Điệp</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; text-align: center; }
+    input, button { padding: 10px; width: 90%; max-width: 400px; margin: 10px auto; display: block; }
+    #qrcode { margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h2>Nhập Thông Điệp</h2>
+  <input id="message" type="text" placeholder="Ghi thông điệp ở đây..." />
+  <button onclick="generateQR()">Tạo Web</button>
+  <div id="qrcode"></div>
+  <p><b>Cách dùng:</b> Mở <u>Zalo</u> → <u>Quét mã QR</u> → <u>Chọn ảnh QR đã lưu</u></p>
+
+  <script>
+    function generateQR() {
+      const msg = document.getElementById("message").value.trim();
+      if (!msg) {
+        alert("Bạn chưa nhập thông điệp!");
+        return;
+      }
+
+      const baseURL = "https://ten-cua-ban.vercel.app/show.html"; // ⚠️ Đổi dòng này!
+      const fullURL = `${baseURL}?msg=${encodeURIComponent(msg)}`;
+
+      QRCode.toCanvas(fullURL, { width: 256 }, function (err, canvas) {
+        if (err) return console.error(err);
+        const qrDiv = document.getElementById("qrcode");
+        qrDiv.innerHTML = "";
+        qrDiv.appendChild(canvas);
+      });
+    }
+  </script>
+</body>
+</html>
